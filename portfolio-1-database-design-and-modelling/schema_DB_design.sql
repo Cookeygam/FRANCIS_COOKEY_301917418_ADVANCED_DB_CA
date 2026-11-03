@@ -20,7 +20,7 @@ ALTER USER CUSTOMER QUOTA UNLIMITED ON USERS;
 -- =========================================================================
 -- SYSTEM COMPONENT: CORE TRANSACTIONS SCHEMA
 -- OBJECT TYPE     : BASE RELATIONAL TABLE, INDEXES, AND OBJECT PRIVILEGES
--- DESIGN PATTERN  : UNIFIED ACCOUNT GENERAL LEDGER MASTER (FINACLE GAM EQUIVALENT)
+-- DESIGN PATTERN  : UNIFIED ACCOUNT GENERAL LEDGER MASTER 
 -- =========================================================================
 -- 1. Base Table Definition
 CREATE TABLE "TRANSACT"."GENERAL_ACCT_MAST_TABLE" (
@@ -74,7 +74,7 @@ GRANT ALTER ON "TRANSACT"."GENERAL_ACCT_MAST_TABLE" TO "APPUSER" WITH GRANT OPTI
 GRANT DELETE ON "TRANSACT"."GENERAL_ACCT_MAST_TABLE" TO "APPUSER" WITH GRANT OPTION;
 -- -------------------------------------------------------------------------------------
 --this is for shorter table name
-CREATE SYNONYM gam FOR GENERAL_ACCT_MAST_TABLE;
+CREATE SYNONYM GAM FOR GENERAL_ACCT_MAST_TABLE;
 -----------------------------------------------------------------------------------------
 
 -- =========================================================================
@@ -86,6 +86,7 @@ CREATE SYNONYM gam FOR GENERAL_ACCT_MAST_TABLE;
 CREATE TABLE "TRANSACT"."DAILY_TXN_DTL" (
     "TXN_ID"             VARCHAR2(16 CHAR)    NOT NULL,
     "TXN_INDEX"          NUMBER(5,0)          NOT NULL,
+	"TRAN_DATE"         DATE                 NOT NULL,
     "ACCT_ID"            VARCHAR2(11 CHAR)    NOT NULL,
     "SOL_ID"             VARCHAR2(4 CHAR)     NOT NULL,
     "PART_TRAN_TYPE"     CHAR(1 BYTE)         NOT NULL,
@@ -104,11 +105,10 @@ CREATE TABLE "TRANSACT"."DAILY_TXN_DTL" (
     "PSTD_FLG"           CHAR(1 BYTE)         DEFAULT 'E' NOT NULL,
     
     CONSTRAINT "PK_DAILY_TXN_DTL" PRIMARY KEY ("TXN_ID", "TXN_INDEX"),
-    CONSTRAINT "FK_DTD_GAM" FOREIGN KEY ("ACID") 
-        REFERENCES "TRANSACT"."GENERAL_ACCT_MAST_TABLE"("ACID"),
+    CONSTRAINT "FK_DTD_GAM" FOREIGN KEY ("ACCT_ID") 
+        REFERENCES "TRANSACT"."GENERAL_ACCT_MAST_TABLE"("ACCT_ID"),
     CONSTRAINT "CHK_DTD_PART_TRAN_TYPE" CHECK ("PART_TRAN_TYPE" IN ('D','C')),
     CONSTRAINT "CHK_DTD_TRAN_TYPE" CHECK ("TRAN_TYPE" IN ('C','T','M')),
-    CONSTRAINT "CHK_DTD_PSTD_FLG" CHECK ("PSTD_FLG" IN ('E','P','X'))
 );
 
 -- =========================================================================
@@ -116,12 +116,17 @@ CREATE TABLE "TRANSACT"."DAILY_TXN_DTL" (
 -- =========================================================================
 
 -- Rapid end-of-day trial balance verification and ledger reconciliation
-CREATE INDEX "TRANSACT"."IDX_DTD_ACID_VALUE_DT" 
-    ON "TRANSACT"."DAILY_TXN_DTL" ("ACID", "VALUE_DATE");
+CREATE INDEX "TRANSACT"."IDX_DTD_ACCT_ID_VALUE_DT" 
+    ON "TRANSACT"."DAILY_TXN_DTL" ("ACID", "VALUE_DATE","TRAN_DATE");
 
 -- Teller/Branch balancing queues for pending unposted transactions
 CREATE INDEX "TRANSACT"."IDX_DTD_SOL_PSTD_FLG" 
     ON "TRANSACT"."DAILY_TXN_DTL" ("SOL_ID", "PSTD_FLG");
+
+-- -------------------------------------------------------------------------------------
+--this is for shorter table name
+CREATE SYNONYM DTD FOR DAILY_TXN_DTL;
+-----------------------------------------------------------------------------------------
 
 -- =========================================================================
 -- MODULE 1: CUSTOMER INFORMATION FILE (CIF) SUBSYSTEM
