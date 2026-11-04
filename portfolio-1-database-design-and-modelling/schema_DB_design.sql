@@ -81,22 +81,37 @@ CREATE TABLE "CUSTOMER"."CORPORATE_CUSTOMER_MASTER" (
 -- -------------------------------------------------------------------------------------
 --this is for shorter table name
 CREATE SYNONYM CORPORATE FOR CORPORATE_CUSTOMER_MASTER;
----------------------------------------------------------------------
+------------------------------------------------------------------
 
-CREATE TABLE customer.aml_forensic_trail (
-    event_id          NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    source_cif_id     VARCHAR2(10 CHAR) NOT NULL,
-    source_table      VARCHAR2(30 CHAR) NOT NULL,
-    source_pk         VARCHAR2(200 CHAR) NOT NULL,
-    action_type       VARCHAR2(20 CHAR) NOT NULL,   
-    action_desc       VARCHAR2(200 CHAR),
-    payload           CLOB NOT NULL,              
-    observed_at       TIMESTAMP DEFAULT SYSTIMESTAMP NOT NULL,
-    entry_user_id     VARCHAR2(15 CHAR) NOT NULL,
-    immutable_flag    CHAR(1 BYTE) DEFAULT 'Y' NOT NULL
-        CONSTRAINT chk_aml_immutable CHECK (immutable_flag = 'Y'),
-    CONSTRAINT fk_aml_cif FOREIGN KEY (source_cif_id) REFERENCES customer.retail_customer_master(cif_id)
-);
+-- 1. Secure Audit Trail Sequence Allocation
+CREATE SEQUENCE "CUSTOMER"."SEQ_AML_FORENSIC_ID" 
+    START WITH 100001 
+    INCREMENT BY 1 
+    NOCACHE 
+    NOCYCLE;
+
+CREATE TABLE "CUSTOMER"."AML_FORENSIC_TRAIL" (
+    "LOG_ID"               NUMBER(19,0)         NOT NULL,
+    "EVENT_TYPE"           VARCHAR2(30 CHAR)    NOT NULL, 
+    "CUSTOMER_TYPE"        VARCHAR2(10 CHAR)    NOT NULL, 
+    "CIF_ID"               VARCHAR2(15 CHAR)    NOT NULL, 
+    "RISK_SCORE_BEFORE"    NUMBER(3,1),                   
+    "RISK_SCORE_AFTER"     NUMBER(3,1)          NOT NULL,
+    "TERMINAL_ID"          VARCHAR2(16 CHAR)    NOT NULL,
+    "IP_ADDRESS"           VARCHAR2(45 CHAR)    NOT NULL, 
+    "INITIATOR_USER"       VARCHAR2(30 CHAR)    NOT NULL, -- Maker ID (Front-Office / System App Account)
+    "VERIFIER_USER"        VARCHAR2(30 CHAR)    NOT NULL, -- Checker ID (Compliance/ Operations Manager)
+    "EVENT_TIMESTAMP"      TIMESTAMP(6)         DEFAULT SYSTIMESTAMP NOT NULL,
+    "AUDIT_PAYLOAD_CLOB"   CLOB,                          -- Full JSON/XML state diff for granular data forensics
+    CONSTRAINT "PK_AML_FORENSIC_TRAIL" PRIMARY KEY ("LOG_ID"),
+    CONSTRAINT "CHK_AML_CUST_TYPE" CHECK ("CUSTOMER_TYPE" IN ('RETAIL', 'CORPORATE')),
+    CONSTRAINT "CHK_AML_RISK_RANGE" CHECK ("RISK_SCORE_AFTER" BETWEEN 0.0 AND 10.0)
+)
+TABLESPACE "SECURE_AUDIT_DATA";
+
+-- 3. Production Hardening: High-Throughput Compliance Access Paths
+CREATE INDEX "CUSTOMER"."IDX_AML_CIF_LOOKUP" 
+    ON "CUSTOMER"."AML_FORENSIC_TRAIL" ("CIF_ID", "CUSTOMER_TYPE");
 
 -- =========================================================================
 -- SYSTEM COMPONENT: CORE ACCOUNT GENERAL LEDGER MASTER
