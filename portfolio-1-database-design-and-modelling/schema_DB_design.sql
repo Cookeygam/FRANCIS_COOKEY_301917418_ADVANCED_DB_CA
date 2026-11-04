@@ -78,8 +78,7 @@ CREATE TABLE "CUSTOMER"."CORPORATE_CUSTOMER_MASTER" (
 	CONSTRAINT pk_retail_cif PRIMARY KEY ("CIF_ID"),
     CONSTRAINT uq_retail_nin UNIQUE ("REGISTRATION_NBR", "CORP_ID")
 );
--- -------------------------------------------------------------------------------------
---this is for shorter table name
+-- ---------------------------------------------------------------------
 CREATE SYNONYM CORPORATE FOR CORPORATE_CUSTOMER_MASTER;
 ------------------------------------------------------------------
 -- 1. Secure Audit Trail Sequence Allocation
