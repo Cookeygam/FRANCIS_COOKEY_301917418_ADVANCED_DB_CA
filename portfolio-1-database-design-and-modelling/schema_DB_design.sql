@@ -7,7 +7,7 @@ SELECT version FROM v$instance;
 
 -- Create the user/database schema with a password
 CREATE USER TRANSACT IDENTIFIED BY "JpmorganChase123$$$#";
-CREATE USER CUSTOMER IDENTIFIED BY "Jpmo@ganBANK1230$$#";
+CREATE USER CUSTOMER IDENTIFIED BY "Jpmo$ganBANK4560$$#";
 
 -- Grant basic connection and development privileges
 GRANT CREATE SESSION, CREATE TABLE, CREATE VIEW, CREATE SEQUENCE TO TRANSACT;
