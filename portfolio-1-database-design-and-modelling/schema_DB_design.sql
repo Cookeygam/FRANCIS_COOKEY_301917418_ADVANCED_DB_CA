@@ -82,7 +82,6 @@ CREATE TABLE "CUSTOMER"."CORPORATE_CUSTOMER_MASTER" (
 --this is for shorter table name
 CREATE SYNONYM CORPORATE FOR CORPORATE_CUSTOMER_MASTER;
 ------------------------------------------------------------------
-
 -- 1. Secure Audit Trail Sequence Allocation
 CREATE SEQUENCE "CUSTOMER"."SEQ_AML_FORENSIC_ID" 
     START WITH 100001 
