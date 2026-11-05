@@ -99,7 +99,7 @@ CREATE TABLE "CUSTOMER"."AML_FORENSIC_TRAIL" (
     "IP_ADDRESS"           VARCHAR2(45 CHAR)    NOT NULL, 
     "INITIATOR_USER"       VARCHAR2(30 CHAR)    NOT NULL, -- Maker ID (Front-Office / System App Account)
     "VERIFIER_USER"        VARCHAR2(30 CHAR)    NOT NULL, -- Checker ID (Compliance/ Operations Manager)
-    "EVENT_TIMESTAMP"      TIMESTAMP(6)         DEFAULT SYSTIMESTAMP NOT NULL,
+    "EVENT_TIMESTAMP"      DATE         DEFAULT SYSDATE NOT NULL,
     "AUDIT_PAYLOAD_CLOB"   CLOB,                          -- Full JSON/XML state diff for granular data forensics
     CONSTRAINT "PK_AML_FORENSIC_TRAIL" PRIMARY KEY ("LOG_ID"),
     CONSTRAINT "CHK_AML_CUST_TYPE" CHECK ("CUSTOMER_TYPE" IN ('RETAIL', 'CORPORATE')),
