@@ -32,7 +32,7 @@ FETCH FIRST 20 ROWS ONLY;
 SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY(format => 'ALL'));
 
 -- =========================================================================================
--- Find payment records where initiated_at matches "2026-04-10 09:30:00" (up to 20).
+-- Find payment records where initiated_at matches "2026-04-10" (up to 20).
 -- =========================================================================================
 
 SELECT h.txn_id, 
@@ -41,7 +41,7 @@ SELECT h.txn_id,
        h.tran_date, 
        h.part_tran_type
 FROM TRANSACT.htd h
-WHERE h.tran_date = TO_DATE('2026-04-10 09:30:00', 'YYYY-MM-DD HH24:MI:SS')
+WHERE h.tran_date = '10-apr-2026'
 ORDER BY h.txn_id
 FETCH FIRST 20 ROWS ONLY;
 
@@ -54,7 +54,7 @@ SELECT
        h.tran_date, 
        h.part_tran_type
 FROM TRANSACT.htd h
-WHERE h.tran_date = TO_DATE('2026-04-10 09:30:00', 'YYYY-MM-DD HH24:MI:SS')
+WHERE h.tran_date = '10-apr-2026'
 ORDER BY h.txn_id
 FETCH FIRST 20 ROWS ONLY;
 
