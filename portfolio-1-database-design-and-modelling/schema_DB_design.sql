@@ -6,9 +6,13 @@ SELECT version FROM v$instance;
 -- -------------------------------------------------------------
 
 -- Create the user/database schema with a password
-CREATE USER TRANSACT IDENTIFIED BY "JpmorganChase123$$$#";
-CREATE USER CUSTOMER IDENTIFIED BY "Jpmo$ganBANK4560$$#";
+CREATE USER TRANSACT IDENTIFIED BY "JpmorganChase123###";
+DEFAULT TABLESPACE users 
+TEMPORARY TABLESPACE temp;
 
+CREATE USER CUSTOMER IDENTIFIED BY "Jpmo$ganBANK4560###";
+DEFAULT TABLESPACE users 
+TEMPORARY TABLESPACE temp;
 -- Grant basic connection and development privileges
 GRANT CREATE SESSION, CREATE TABLE, CREATE VIEW, CREATE SEQUENCE TO TRANSACT;
 GRANT CREATE SESSION, CREATE TABLE, CREATE VIEW, CREATE SEQUENCE TO CUSTOMER;
@@ -20,6 +24,7 @@ ALTER USER CUSTOMER QUOTA 100M ON USERS;
 -- =========================================================================
 -- SYSTEM COMPONENT: CUSTOMER INFORMATION FILE (CIF) SUBSYSTEM
 -- =========================================================================
+ALTER SESSION SET CURRENT_SCHEMA = CUSTOMER;
 
 CREATE TABLE "CUSTOMER"."RETAIL_CUSTOMER_MASTER" (
     "CIF_ID"           VARCHAR2(10 CHAR),
@@ -114,6 +119,7 @@ CREATE INDEX "CUSTOMER"."IDX_AML_CIF_LOOKUP"
 -- =========================================================================
 -- SYSTEM COMPONENT: CORE ACCOUNT GENERAL LEDGER MASTER
 -- =========================================================================
+ALTER SESSION SET CURRENT_SCHEMA = TRANSACT;
 
 CREATE TABLE "TRANSACT"."GENERAL_ACCT_MAST_TABLE" (
     "ACCT_ID"              VARCHAR2(16 CHAR), 
