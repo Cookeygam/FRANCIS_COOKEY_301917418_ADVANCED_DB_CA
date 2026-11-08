@@ -26,16 +26,20 @@
   - Customer details are separated from account details (no duplication of names in account table).
   - Transaction details are separated from account master (no duplication of balances).
   - AML forensic trail is separated as an independent immutable log.
+Every non-prime attribute must depend entirely and directly on the primary key identifier. Let us analyze our core transaction engine ledger table (GENERAL_ACCT_MAST_TABLE)
 - Each entity’s key determines its own attributes.
+
+`{ACCT_ID}` ----> {`ACCT_NUM`,`CIF_ID`,`SOL_ID`,`GL_CODE`,`CLR_BAL_AMT`,`LIEN_AMT`}
 
 ✅ **Result:** No non‑key attribute depends on another non‑key attribute.
 
 ---
 
-## 4. Boyce‑Codd Normal Form (BCNF – optional refinement)
-- Ensures no anomalies in GL postings and reconciliation.
-- Example: `TRAN_TYPE` and `PART_TRAN_TYPE` are constrained to valid values via check constraints.
-- `AML_FORENSIC_TRAIL` enforces immutability (`immutable_flag = 'Y'`).
+#   Storage Optimization & Precision Architecture
+
+For a tier handling multi-currency processing on Exadata, floating-point data errors can introduce auditing issues. I have addressed this through precise data type configurations:
+
+- `NUMBER(20,4)` & `NUMBER(25,4)`: Standardizes financial columns `(CLR_BAL_AMT, CUM_DR_AMT)` to 4 decimal places. This ensures perfect rounding precision across international currencies like NGN, USD, GBP, and EUR.
 
 ---
 
