@@ -152,11 +152,10 @@ EXEC DBMS_STATS.GATHER_TABLE_STATS(
 
 ### Performance Results
 
-| Phase | Median Execution Time (ms) | Three Runs (ms) | Dominant Access Path | Consistent Gets |
+| Phase | Median Execution Time (ms) | Three Runs (ms) | Dominant Access Path | Logical Reads |
 |---------|---------:|---------|---------|---------:|
 | Before Index | 2,260 | 2,253, 2,260, 2,292 | `HASH JOIN` + `TABLE ACCESS FULL` | 274 |
 | After Index | 289 | 289, 283, 302 | `INDEX RANGE SCAN` + `TABLE ACCESS BY INDEX ROWID` | 55 |
 
 ### Conclusion
-
 The implementation of the indexing strategy significantly improved query performance. Prior to optimization, Oracle relied primarily on full table scans to evaluate the filtering criteria, resulting in higher I/O activity and longer execution times. After index creation and statistics refresh, the optimizer adopted index range scans, reducing both logical reads and execution time. This demonstrates that the selected indexes provide efficient access paths for compliance reporting queries involving large account balances and high AML risk indicators.
