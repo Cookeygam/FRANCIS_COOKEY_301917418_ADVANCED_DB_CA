@@ -127,6 +127,7 @@ CREATE TABLE "TRANSACT"."GENERAL_ACCT_MAST_TABLE" (
     "ACCT_NUM"             VARCHAR2(34 CHAR)    NOT NULL, 
     "CIF_ID"               VARCHAR2(10 CHAR)    NOT NULL, 
     "SOL_ID"               VARCHAR2(4 CHAR)     NOT NULL, 
+    "FREEZE_STATUS"        VARCHAR2(4 CHAR), 
     "ENTITY_CRE_FLG"       CHAR(1 BYTE)         DEFAULT 'N' NOT NULL, 
     "DEL_FLG"              CHAR(1 BYTE)         DEFAULT 'N' NOT NULL, 
     "ACCT_NAME"            VARCHAR2(100 CHAR), 
