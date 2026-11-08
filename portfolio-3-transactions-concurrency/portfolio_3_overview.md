@@ -6,7 +6,7 @@ A key responsibility of the database is to ensure that all financial transaction
 
 These properties ensure that a transaction is either completed in its entirety or not applied at all, preventing situations where only part of a financial operation is recorded. They also guarantee that committed transactions remain permanently stored and that concurrent users cannot introduce inconsistencies into the system.
 
-To demonstrate transaction management within the proposed banking environment, operations are performed across the core tables developed in [Portfolio 1](../port):
+To demonstrate transaction management within the proposed banking environment, operations are performed across the core tables developed in [Portfolio 1](../portfolio-1-database-design-and-modelling/portfolio_1_overview.md):
 
 ### `TRANSACT.GENERAL_ACCT_MAST_TABLE (GAM)`
 
