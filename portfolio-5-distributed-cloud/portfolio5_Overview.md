@@ -107,8 +107,12 @@ While such scenarios may be uncommon, banking systems must be designed around wo
 Maintaining a disaster recovery site helps ensure that customer data remains recoverable even during catastrophic infrastructure failures.
 
 ---
+# Cloud deployment, Replication and recovery
 
-# Replication Strategy
+A real deployment would use private networking, authentication, least-privilege roles, TLS, monitoring and tested backups. Replication also copies accidental deletions, so it does not replace backups. Availability zones do not provide regional disaster recovery. No cloud service was provisioned and no failover, replication, sharding or recovery experiment was run for this discussion.
+
+
+## Replication Strategy
 
 Replication forms the foundation of the distributed design.
 
