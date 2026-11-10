@@ -3,6 +3,7 @@
  --------------------------------------------
 
 set define off;
+SET SERVEROUTPUT ON;
 
 -- Branches (service outlets)
 INSERT INTO CUSTOMER.BRANCH_MASTER (SOL_ID, SOL_NAME, CITY, STATE_NAME) VALUES ('1001','Victoria Island (SOL 1001)','Lagos','Lagos');
