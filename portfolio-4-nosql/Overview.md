@@ -141,6 +141,26 @@ The MongoDB implementation demonstrates how to:
 
 ---
 
+[Transaction Document Model] (../portfolio-4-nosql/transaction_document_model.json)
+
+The NoSQL implementation uses a MongoDB collection named `transaction_events`.
+
+Each document represents a single transaction event and contains both the transaction details and any channel-specific metadata captured at the time the event occurred.
+
+The design follows the transaction structure already established in the Oracle Database implementation. Customer and account information remain stored within Oracle Database 19c, while MongoDB stores transaction-event records used for querying, reporting, and analysis.
+
+The document model includes:
+
+- `transaction_id` to uniquely identify each transaction.
+- `account_id` to reference the account maintained in Oracle.
+- `customer_reference` to reference the customer record.
+- `transaction_date` and `amount` to store transaction details.
+- `channel` to indicate how the transaction was performed.
+- `status` to record the transaction outcome.
+- `metadata` to store transaction-specific information that varies by channel.
+
+This design was chosen because different banking channels often capture different supporting information. By storing this information inside the document, the model can support multiple transaction types without requiring additional tables or frequent schema modifications.
+
 ## Expected Outcome
 
 The expected outcome of this portfolio is to demonstrate that a document-oriented database can complement the existing Oracle implementation by providing a flexible method for storing and analysing transaction-event information that does not naturally fit into a fixed relational structure.
