@@ -8,7 +8,7 @@
 ## 1. Project Overview
 ---
 
-JPMorgan Chase & Co. is establishing a commercial banking operation within the Federal Republic of Nigeria, targeting corporate banking, investment banking, asset management, and high-net-worth treasury operations under a license from the Central Bank of Nigeria (CBN). The bank would serve corporate clients, investment banking, asset management and high-net-worth treasury.
+JPMorgan Chase & Co. established a commercial banking operation within the Federal Republic of Nigeria, targeting corporate banking, investment banking, asset management, and high-net-worth treasury operations under a license from the Central Bank of Nigeria (CBN). The bank would serve corporate clients, investment banking, asset management and high-net-worth treasury.
 
 As a global financial services institution, JPMorgan Chase operates in an environment where transaction accuracy, data integrity, controlled access, auditability, and system availability are fundamental to banking operations. These requirements provide the context for applying advanced database administration and engineering concepts throughout this project.
 
