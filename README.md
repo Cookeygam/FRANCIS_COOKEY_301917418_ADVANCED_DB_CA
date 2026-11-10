@@ -101,8 +101,8 @@ Each portfolio folder has its own README.
 |---|---|---|
 | 1 | Database design and modelling | Done ✅|
 | 2 | Query processing and optimization | Done ✅ |
-| 3 | Transactions and concurrency | Not started |
-| 4 | NoSQL and advanced data models | Not started |
+| 3 | Transactions and concurrency | Done ✅ |
+| 4 | NoSQL and advanced data models | ongoing |
 | 5 | Distributed and cloud database exercise | Not started |
 
 ## 9. References
