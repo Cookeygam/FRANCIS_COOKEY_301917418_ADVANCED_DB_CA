@@ -1,4 +1,4 @@
-# Portfolio 4: NoSQL and Advanced Data Models
+# NoSQL and Advanced Data Models
 
 ## JPMorgan Chase & Co. – Transaction Event Records Using MongoDB
 
