@@ -102,10 +102,17 @@ Each portfolio folder has its own README.
 | 1 | Database design and modelling | Done ✅|
 | 2 | Query processing and optimization | Done ✅ |
 | 3 | Transactions and concurrency | Done ✅ |
-| 4 | NoSQL and advanced data models | ongoing |
-| 5 | Distributed and cloud database exercise | Not started |
+| 4 | NoSQL and advanced data models | Done ✅ |
+| 5 | Distributed and cloud database exercise | Done ✅ |
 
 ## 9. References
 
-
+- [ORACLE: schema design](https://docs.oracle.com/en/database/oracle/oracle-database/26/dbiad/db_schemas.html)
+- [MongoDB: data modelling](https://www.mongodb.com/docs/manual/data-modeling/)
+- [MongoDB: replication](https://www.mongodb.com/docs/manual/replication/)
+- [MongoDB: sharding](https://www.mongodb.com/docs/manual/sharding/)
+- [Mermaid: ER diagrams](https://mermaid.js.org/syntax/entityRelationshipDiagram.html)
+- 
 ## 10. AI use declaration
+
+I remain the brain behind the idea, case study, method, strategy and explaining the submitted work. I used Copilot and Gemini to help expand on the explanations. Gemini was used to generate sample data, while copilot was used to proof read for grammatical errors.
