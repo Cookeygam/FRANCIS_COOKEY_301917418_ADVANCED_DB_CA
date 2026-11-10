@@ -1,0 +1,112 @@
+{
+  "$schema": "https://apischema.jpmorgan.com/draft/2020-12/schema",
+  "title": "JPMorgan Transaction Event",
+  "description": "Document model for transaction-event storage and operational investigation. Sample data is synthetic and does not represent actual JPMorgan Chase records.",
+  "type": "object",
+  "required": [
+    "_id",
+    "account_id",
+    "customer_reference",
+    "transaction_date",
+    "amount",
+    "currency",
+    "transaction_type",
+    "channel",
+    "status",
+    "metadata"
+  ],
+  "properties": {
+    "_id": {
+      "type": "string",
+      "description": "Unique transaction event identifier"
+    },
+    "account_id": {
+      "type": "string",
+      "description": "Account identifier referencing the Oracle account record"
+    },
+    "customer_reference": {
+      "type": "string",
+      "description": "Customer reference corresponding to the Oracle customer record"
+    },
+    "transaction_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Transaction event timestamp in ISO 8601 format"
+    },
+    "amount": {
+      "type": "string",
+      "pattern": "^[0-9]+(\\.[0-9]{1,2})?$",
+      "description": "Non-negative monetary amount represented as a decimal string in this JSON model. MongoDB implementation uses BSON Decimal128."
+    },
+    "currency": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 3,
+      "description": "Three-character currency code"
+    },
+    "transaction_type": {
+      "type": "string",
+      "enum": [
+        "TRANSFER",
+        "PAYMENT",
+        "WITHDRAWAL",
+        "DEPOSIT"
+      ],
+      "description": "Classification of the transaction"
+    },
+    "channel": {
+      "type": "string",
+      "enum": [
+        "MOBILE",
+        "WEB",
+        "ATM",
+        "BRANCH"
+      ],
+      "description": "Channel through which the transaction was initiated"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "SUCCESS",
+        "FAILED",
+        "PENDING",
+        "REVERSED"
+      ],
+      "description": "Current processing status of the transaction event"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Embedded processing and channel-specific transaction details",
+      "required": [
+        "source_system",
+        "response_code",
+        "processing_time_ms"
+      ],
+      "properties": {
+        "source_system": {
+          "type": "string",
+          "description": "System that originated or processed the event"
+        },
+        "destination_bank": {
+          "type": "string",
+          "description": "Destination bank identifier where applicable"
+        },
+        "destination_account_masked": {
+          "type": "string",
+          "description": "Masked destination account identifier where applicable"
+        },
+        "response_code": {
+          "type": "string",
+          "description": "Processing response code"
+        },
+        "processing_time_ms": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Processing duration in milliseconds"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
