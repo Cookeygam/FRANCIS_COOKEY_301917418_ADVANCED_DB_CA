@@ -1,7 +1,7 @@
 {
   "transaction_id": "TXN100001",
   "account_id": "ACC10001",
-  "customer_reference": "CIF10001",
+  "customer_reference": "CIF1000001",
   "transaction_date": "2026-11-01",
   "amount": 25000.00,
   "currency": "NGN",
@@ -10,31 +10,11 @@
   "status": "SUCCESSFUL",
   "metadata": {
     "device_type": "Android",
+    "destination_bank": "BANK-002",
+    "destination_account_masked": "******4821",
+    "response_code": "00",
     "app_version": "2.4.1",
     "location": "Lagos",
     "beneficiary_reference": "BEN10001"
   }
 }
-
-
- [
-    {
-      "_id": "TXN-20261110-000001",
-      "account_id": "ACC-100045",
-      "customer_reference": "CUST-000145",
-      "transaction_date": "2026-11-10T09:15:00Z",
-      "amount": "250000.00",
-      "currency": "NGN",
-      "transaction_type": "TRANSFER",
-      "channel": "MOBILE",
-      "status": "SUCCESS",
-      "metadata": {
-        "source_system": "MOBILE_BANKING",
-        "destination_bank": "BANK-002",
-        "destination_account_masked": "******4821",
-        "response_code": "00",
-        "processing_time_ms": 420
-      }
-    }
-  ]
-
