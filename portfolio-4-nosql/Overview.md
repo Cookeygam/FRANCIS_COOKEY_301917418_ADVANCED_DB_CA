@@ -141,7 +141,7 @@ The MongoDB implementation demonstrates how to:
 
 ---
 
-[Transaction Document Model] (../portfolio-4-nosql/transaction_document_model.json)
+[Transaction Document Model](portfolio-4-nosql/transaction_document_model.json)
 
 The NoSQL implementation uses a MongoDB collection named `transaction_events`.
 
