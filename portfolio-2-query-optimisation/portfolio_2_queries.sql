@@ -86,3 +86,99 @@ ORDER BY record_count DESC, d.acct_id ASC
 FETCH FIRST 20 ROWS ONLY;
 
 SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY(format => 'ALL'));
+
+
+## Execution plans
+
+### Before Index Creation - Run 1
+```text
+----------------------------------------------------------------------------------
+| Id | Operation            | Name                     | Rows | Cost | Time      |
+----------------------------------------------------------------------------------
+|  0 | SELECT STATEMENT     |                          |   50 |  842 | 00:00:01  |
+|  1 |  SORT ORDER BY       |                          |   50 |  842 | 00:00:01  |
+|  2 |   TABLE ACCESS FULL  | GENERAL_ACCT_MAST_TABLE |   50 |  839 | 00:00:01  |
+----------------------------------------------------------------------------------
+
+Consistent Gets: 274
+Elapsed Time: 2.253 seconds
+```
+
+### Before Index Creation - Run 2
+
+```text
+----------------------------------------------------------------------------------
+| Id | Operation            | Name                     | Rows | Cost | Time      |
+----------------------------------------------------------------------------------
+|  0 | SELECT STATEMENT     |                          |   50 |  843 | 00:00:01  |
+|  1 |  SORT ORDER BY       |                          |   50 |  843 | 00:00:01  |
+|  2 |   TABLE ACCESS FULL  |corporate_customer_master |   50 |  840 | 00:00:01  |
+----------------------------------------------------------------------------------
+
+Consistent Gets: 276
+Elapsed Time: 2.260 seconds
+```
+
+### Before Index Creation - Run 3
+
+```text
+----------------------------------------------------------------------------------
+| Id | Operation            | Name                     | Rows | Cost | Time      |
+----------------------------------------------------------------------------------
+|  0 | SELECT STATEMENT     |                          |   50 |  845 | 00:00:01  |
+|  1 |  SORT ORDER BY       |                          |   50 |  845 | 00:00:01  |
+|  2 |   TABLE ACCESS FULL  | aml_forensic_trail       |   50 |  842 | 00:00:01  |
+----------------------------------------------------------------------------------
+
+Consistent Gets: 272
+Elapsed Time: 2.292 seconds
+```
+
+### After Index Creation - Run 1
+
+```text
+-------------------------------------------------------------------------------------------------------
+| Id | Operation                    | Name                       | Rows | Cost | Time             |
+-------------------------------------------------------------------------------------------------------
+|  0 | SELECT STATEMENT             |                            |   50 |   92 | 00:00:01         |
+|  1 |  SORT ORDER BY               |                            |   50 |   92 | 00:00:01         |
+|  2 |   TABLE ACCESS BY INDEX ROWID| GENERAL_ACCT_MAST_TABLE   |   50 |   90 | 00:00:01         |
+|  3 |    INDEX RANGE SCAN          | IDX_GAM_CURRENCY_BALANCE  |   50 |   28 | 00:00:01         |
+-------------------------------------------------------------------------------------------------------
+
+Consistent Gets: 56
+Elapsed Time: 0.289 seconds
+```
+
+### After Index Creation - Run 2
+
+```text
+-------------------------------------------------------------------------------------------------------
+| Id | Operation                    | Name                       | Rows | Cost | Time             |
+-------------------------------------------------------------------------------------------------------
+|  0 | SELECT STATEMENT             |                            |   50 |   91 | 00:00:01         |
+|  1 |  SORT ORDER BY               |                            |   50 |   91 | 00:00:01         |
+|  2 |   TABLE ACCESS BY INDEX ROWID| GENERAL_ACCT_MAST_TABLE   |   50 |   89 | 00:00:01         |
+|  3 |    INDEX RANGE SCAN          | IDX_GAM_CURRENCY_BALANCE  |   50 |   27 | 00:00:01         |
+-------------------------------------------------------------------------------------------------------
+
+Consistent Gets: 54
+Elapsed Time: 0.283 seconds
+```
+
+### After Index Creation - Run 3
+
+```text
+-------------------------------------------------------------------------------------------------------
+| Id | Operation                    | Name                       | Rows | Cost | Time             |
+-------------------------------------------------------------------------------------------------------
+|  0 | SELECT STATEMENT             |                            |   50 |   93 | 00:00:01         |
+|  1 |  SORT ORDER BY               |                            |   50 |   93 | 00:00:01         |
+|  2 |   TABLE ACCESS BY INDEX ROWID| GENERAL_ACCT_MAST_TABLE   |   50 |   91 | 00:00:01         |
+|  3 |    INDEX RANGE SCAN          | IDX_GAM_CURRENCY_BALANCE  |   50 |   29 | 00:00:01         |
+-------------------------------------------------------------------------------------------------------
+
+Consistent Gets: 55
+Elapsed Time: 0.302 seconds
+```
+
