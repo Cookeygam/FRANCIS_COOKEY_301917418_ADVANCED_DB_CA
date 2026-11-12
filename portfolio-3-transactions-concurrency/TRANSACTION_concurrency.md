@@ -158,7 +158,7 @@ The procedure includes explicit exception handling to manage expected business s
 | `e_account_frozen` | Blocks transactions on restricted customer accounts. |
 | `e_insufficient_funds` | Prevents an account from exceeding available funds after considering active liens. |
 | `e_row_locked_timeout` | Detects situations where another session is currently modifying the account. |
-| `OTHERS` | Captures unexpected database errors and ensures a complete rollback. |
+| `OTHERS` | Any unhandled `SQLCODE` Captures unexpected database or constraint errors and issues an immediate `ROLLBACK` to guarantee strict ACID atomicity across `GENERAL_ACCT_MAST_TABLE`, `DAILY_TXN_DTL`, and `AML_FORENSIC_TRAIL`. |
 
 If any exception occurs, Oracle executes a `ROLLBACK` statement to undo all pending changes. As a result, either every operation succeeds together or no changes are applied.
 
@@ -273,18 +273,21 @@ BEGIN
     COMMIT;
 
 EXCEPTION
+    WHEN e_row_locked_timeout THEN
+        ROLLBACK;
+        DBMS_OUTPUT.PUT_LINE('LOCK CONTENTION (ORA-00054): Account ' || p_acct_num || ' is locked by another active session. Transaction rolled back.');
+
     WHEN e_account_frozen THEN
         ROLLBACK;
-        RAISE_APPLICATION_ERROR(-20103, 'Security Block: Operational request aborted due to active regulatory hold.');
-        
+        DBMS_OUTPUT.PUT_LINE('COMPLIANCE BLOCK: Customer CIF ' || v_cif_id || ' is FROZEN. Transaction rolled back.');
+
     WHEN e_insufficient_funds THEN
         ROLLBACK;
-        RAISE_APPLICATION_ERROR(-20104, 'Liquidity Violation: Available balance cannot fall below active account liens.');
-        
+        DBMS_OUTPUT.PUT_LINE('INSUFFICIENT FUNDS: Available balance after liens is below ' || p_debit_amount || '. Transaction rolled back.');
+
     WHEN OTHERS THEN
         ROLLBACK;
-        -- Re-raise unexpected system exceptions to guarantee complete rollback
-        RAISE;
+        DBMS_OUTPUT.PUT_LINE('SYSTEM ERROR (' || SQLCODE || '): ' || SQLERRM || '. Full rollback executed.');
 END;
 /
 ```
@@ -316,4 +319,3 @@ As a result, the account update and AML audit entry are treated as a single unit
 
 1. Oracle Multi-Version Concurrency Control (MVCC): Readers do not block writers, and writers do not block readers. Read operations pull data snapshots from the Undo Tablespace, ensuring high performance even during intensive batch processing windows.
 2. Pessimistic Locking Overrides: For critical financial values like account balances (CLR_BAL_AMT), we bypass optimistic concurrency controls. Forcing transaction blocks to lock rows immediately using FOR UPDATE NOWAIT prevents long wait queues and eliminates the risk of system deadlocks at the block storage layer.
-Portfolio 3 is now fully configured, verified, and mapped to your core database schema.
