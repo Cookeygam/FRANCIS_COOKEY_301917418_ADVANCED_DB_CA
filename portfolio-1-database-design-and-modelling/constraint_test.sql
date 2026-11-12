@@ -52,11 +52,11 @@ INSERT INTO TRANSACT.DAILY_TXN_DTL
 VALUES (9001, 1, 'ACCT00000001', 'X', 100, 'T', 'TRF', DATE '2026-11-10', DATE '2026-11-10', 'INI9083001');
 --Output ORA-02290
 
--- 5. Tamper with the forensic trail (trigger)                 
+-- 5. Tamper with the forensic trail      
 UPDATE CUSTOMER.AML_FORENSIC_TRAIL SET RISK_SCORE_AFTER = 0 WHERE LOG_ID = 10001;
 -- Output ORA-20901
 
--- 6. Delete from the forensic trail (trigger)                 
+-- 6. Delete from the forensic trail            
 DELETE FROM CUSTOMER.AML_FORENSIC_TRAIL WHERE LOG_ID = 10001;
 --output  ORA-20901
 
