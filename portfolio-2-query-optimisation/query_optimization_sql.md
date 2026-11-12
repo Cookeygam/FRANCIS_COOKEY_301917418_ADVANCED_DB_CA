@@ -195,28 +195,30 @@ Before adding secondary indexes, Oracle 19c performed full table scans (`TABLE A
 ### Indexes Implemented
 
 ```sql
-CREATE INDEX TRANSACT.idx_gam_currency_balance
-    ON TRANSACT.general_acct_mast_table
-       (acct_crncy_code,
-        clr_bal_amt,
-        cif_id,
-        acct_id,
-        acct_num)
+-- 1. Covering Index for High-Value Active Account Filtering
+CREATE INDEX TRANSACT.idx_gam_curr_del_bal_cov 
+    ON TRANSACT.general_acct_mast_table (acct_crncy_code, del_flg, clr_bal_amt, cif_id, acct_id, acct_num)
     COMPRESS 2;
 
-CREATE INDEX CUSTOMER.idx_corporate_cif_covering
-    ON CUSTOMER.corporate_customer_master
-       (cif_id,
-        registration_nbr,
-        risk_rating);
-
-CREATE INDEX CUSTOMER.idx_aml_risk_evaluation
-    ON CUSTOMER.aml_forensic_trail
-       (customer_type,
-        risk_score_after,
-        cif_id,
-        log_id)
+-- 2. True Covering Index for Corporate Customer Registry
+CREATE INDEX CUSTOMER.idx_corp_cif_covering 
+    ON CUSTOMER.corporate_customer_master (cif_id, del_flg, company_name, registration_nbr, risk_rating)
     COMPRESS 2;
+
+-- 3. Composite Index for Windowed AML Forensic Event Lookup
+CREATE INDEX CUSTOMER.idx_aml_corp_ts_score 
+    ON CUSTOMER.aml_forensic_trail (customer_type, cif_id, event_timestamp DESC, risk_score_after)
+    COMPRESS 1;
+
+-- 4. Covering Index for 30-Day Payment Volume Aggregation
+CREATE INDEX TRANSACT.IDX_DTD_PSTD_DATE_COV 
+    ON TRANSACT.DAILY_TXN_DTL (pstd_flg, del_flg, tran_date, acct_id, tran_amt, tran_id)
+    COMPRESS 1;
+
+-- 5. Covering Index for 30-Day Payment Volume Aggregation
+CREATE INDEX TRANSACT.IDX_HTD_PSTD_DATE_COV 
+    ON TRANSACT.HISTORY_TXN_DTL (pstd_flg, del_flg, tran_date, acct_id, tran_amt, tran_id)
+    COMPRESS 1;
 ```
 
 ### Statistics Refresh
