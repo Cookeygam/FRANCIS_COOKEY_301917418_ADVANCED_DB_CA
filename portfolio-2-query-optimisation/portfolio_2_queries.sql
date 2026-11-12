@@ -143,7 +143,7 @@ Elapsed Time: 2.292 seconds
 |  0 | SELECT STATEMENT             |                            |   50 |   92 | 00:00:01         |
 |  1 |  SORT ORDER BY               |                            |   50 |   92 | 00:00:01         |
 |  2 |   TABLE ACCESS BY INDEX ROWID| GENERAL_ACCT_MAST_TABLE   |   50 |   90 | 00:00:01         |
-|  3 |    INDEX RANGE SCAN          | IDX_GAM_CURRENCY_BALANCE  |   50 |   28 | 00:00:01         |
+|  3 |    INDEX RANGE SCAN          | idx_gam_curr_del_bal_cov  |   50 |   28 | 00:00:01         |
 -------------------------------------------------------------------------------------------------------
 
 Consistent Gets: 56
@@ -159,7 +159,7 @@ Elapsed Time: 0.289 seconds
 |  0 | SELECT STATEMENT             |                            |   50 |   91 | 00:00:01         |
 |  1 |  SORT ORDER BY               |                            |   50 |   91 | 00:00:01         |
 |  2 |   TABLE ACCESS BY INDEX ROWID| GENERAL_ACCT_MAST_TABLE   |   50 |   89 | 00:00:01         |
-|  3 |    INDEX RANGE SCAN          | IDX_GAM_CURRENCY_BALANCE  |   50 |   27 | 00:00:01         |
+|  3 |    INDEX RANGE SCAN          | idx_gam_curr_del_bal_cov  |   50 |   27 | 00:00:01         |
 -------------------------------------------------------------------------------------------------------
 
 Consistent Gets: 54
@@ -175,7 +175,7 @@ Elapsed Time: 0.283 seconds
 |  0 | SELECT STATEMENT             |                            |   50 |   93 | 00:00:01         |
 |  1 |  SORT ORDER BY               |                            |   50 |   93 | 00:00:01         |
 |  2 |   TABLE ACCESS BY INDEX ROWID| GENERAL_ACCT_MAST_TABLE   |   50 |   91 | 00:00:01         |
-|  3 |    INDEX RANGE SCAN          | IDX_GAM_CURRENCY_BALANCE  |   50 |   29 | 00:00:01         |
+|  3 |    INDEX RANGE SCAN          | idx_gam_curr_del_bal_cov  |   50 |   29 | 00:00:01         |
 -------------------------------------------------------------------------------------------------------
 
 Consistent Gets: 55
