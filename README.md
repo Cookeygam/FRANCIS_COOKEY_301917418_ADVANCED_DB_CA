@@ -113,6 +113,6 @@ Each portfolio folder has its own README.
 - [MongoDB: sharding](https://www.mongodb.com/docs/manual/sharding/)
 - [Mermaid: ER diagrams](https://mermaid.js.org/syntax/entityRelationshipDiagram.html)
 - 
-## 10. AI use declaration
+## 10. AI Use & Academic Integrity Declaration: 
 
-I remain the brain behind the idea, case study, method, strategy and explaining the submitted work. I used Copilot and Gemini to help expand on the explanations. Gemini was used to generate sample data, while copilot was used to proof read for grammatical errors.
+All architectural decisions, case study framing, database schemas, optimization strategies, and technical explanations in this portfolio are the original work of Francis Cookey (ID: 301917418). Generative AI tools (Gemini and GitHub Copilot) were utilized strictly as productivity aids for generating synthetic banking test datasets, refining technical prose, and proofreading documentation. 
