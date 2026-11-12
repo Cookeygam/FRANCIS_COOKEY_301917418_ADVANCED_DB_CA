@@ -107,6 +107,15 @@ While such scenarios may be uncommon, banking systems must be designed around wo
 Maintaining a disaster recovery site helps ensure that customer data remains recoverable even during catastrophic infrastructure failures.
 
 ---
+
+## Consistency and the case
+
+For transaction_events, a proposed client policy is majority write concern with a finite timeout, primary reads and majority read concern where committed data is required. Secondary reads can lag. Application retries need an idempotency key so the same event is not recorded twice. Oracle constraints remain authoritative for Every account must reference an existing corporate or retail customer. These settings do not create an atomic transaction across Oracle and MongoDB. An outbox and retrying consumer would be a separate implementation.
+
+## Sharding trade-off
+
+Sharding partitions documents; replication copies them for availability. The small sample in this portfolio does not need sharding. If transaction_events becomes large, evaluate a high-cardinality source-record identifier as a possible hashed shard key against actual query and write patterns. A time-only increasing key can concentrate new writes, while a hashed key can make time-range queries contact multiple shards. Validate distribution and query plans before choosing a key.
+
 # Cloud deployment, Replication and recovery
 
 A real deployment would use private networking, authentication, least-privilege roles, TLS, monitoring and tested backups. Replication also copies accidental deletions, so it does not replace backups. Availability zones do not provide regional disaster recovery. No cloud service was provisioned and no failover, replication, sharding or recovery experiment was run for this discussion.
