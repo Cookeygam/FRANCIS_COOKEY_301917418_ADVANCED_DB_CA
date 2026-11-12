@@ -57,7 +57,7 @@
     "channel": {
       "type": "string",
       "enum": [
-        "MOBILE",
+        "MOBILE_BANKING",
         "WEB",
         "ATM",
         "BRANCH"
@@ -67,7 +67,7 @@
     "status": {
       "type": "string",
       "enum": [
-        "SUCCESS",
+        "SUCCESSFUL",
         "FAILED",
         "PENDING",
         "REVERSED"
