@@ -108,7 +108,6 @@ This portfolio contains the following implementation files:
 | `transaction_document_model.json` | Sample MongoDB document structure |
 | `portfolio4_mongodb.js` | MongoDB commands for implementation and testing |
 | `portfolio4_results.md` | Query results, observations, and evaluation |
-| `screenshots/` | Evidence of implementation and execution |
 
 ---
 
