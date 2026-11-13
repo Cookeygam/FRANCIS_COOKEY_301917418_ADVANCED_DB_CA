@@ -68,7 +68,7 @@ The access model applies the principle of least privilege. Users receive permiss
 1. **Isolation:** Each schema operates as an independent security boundary. Tables are wholly owned by their respective schema users.
 2. **Access Control:** No direct cross-schema modifications are allowed. If the `CUSTOMER` engine needs to read data from `TRANSACT` for AML transaction spotting, explicit `GRANT SELECT` privileges must be mapped explicitly via database roles.
 
-## 5. Technology and Implementation Environment
+## 6. Technology and Implementation Environment
 
 The case-study architecture references the following banking technology context:
 
